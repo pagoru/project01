@@ -26,10 +26,36 @@
 
         If My.Computer.Keyboard.AltKeyDown Then
             DarwSsquare(first.X, first.Y, last.X, last.Y)
+        ElseIf My.Computer.Keyboard.CtrlKeyDown Then
+            DrawEllipse(first.X, first.Y, last.X, last.Y)
         Else
             DrawLinePoint(first, last)
         End If
 
+    End Sub
+
+    Public Sub DrawEllipse(ByVal x As Integer, ByVal y As Integer, ByVal w As Integer, ByVal h As Integer)
+        Dim myPen As New System.Drawing.Pen(System.Drawing.Color.Blue)
+        Dim formGraphics As System.Drawing.Graphics
+        formGraphics = Me.CreateGraphics()
+
+        Dim nX = x
+        Dim nY = y
+        Dim nW = w - x
+        If (nW < 0) Then
+            nX = w
+            nW = x - nX
+        End If
+        Dim nH = h - y
+        If (nH < 0) Then
+            nY = h
+            nH = y - nY
+        End If
+
+        Dim rectan As New Rectangle(nX, nY, nW, nH)
+        formGraphics.DrawEllipse(myPen, rectan)
+        myPen.Dispose()
+        formGraphics.Dispose()
     End Sub
 
     Public Sub DarwSsquare(ByVal x As Integer, ByVal y As Integer, ByVal w As Integer, ByVal h As Integer)
